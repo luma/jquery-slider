@@ -61,13 +61,13 @@
                     // });
 
                     // Set the current value
-                    _setValue($(this), settings.value);
+                    _setValue($(this), data, settings.value);
                 }).on('changevalue.slider', onUpdateCb);
             },
 
             setValue: function(value) {
                 return this.each(function() {
-                    _setValue($(this), value);
+                    _setValue($(this), $this.data('slider'), value);
                 });
             },
 
@@ -114,13 +114,12 @@
         }
     };
 
-    var _setValue = function($this, value) {
-            var data = $this.data('slider'),
-                steppedValue = value;
+    var _setValue = function($this, data, value) {
+            var steppedValue = value;
 
             if (!data) return;
 
-            if (data.step > 1) {
+            if (data.step) {
                 steppedValue = steppedValue - (steppedValue % data.step);
             }
 
@@ -133,6 +132,8 @@
             var left = data.indicatorWidth * steppedValue * data.inverseInterval;
             data.$indicator[0].style.width = left + 'px';
             data.$handle[0].style.marginLeft = left - data.halfHandleWidth + 'px';
+
+            return data;
         },
 
         // Converts an absolute position to a slider value.
@@ -193,6 +194,7 @@
         _onDrag = function(event, data) {
             _setValue(
                 this,
+                data,
                 _pointToValue(event.pageX, event.pageY, data)
             );
 
@@ -208,6 +210,12 @@
                 'mousemove.slider': data._onMouseMove,
                 'mouseup.slider': data._onMouseUp
             });
+
+            data = _setValue(
+                this,
+                data,
+                _pointToValue(event.pageX, event.pageY, data)
+            );
 
             delete data.position;
             this.data('slider', data);
