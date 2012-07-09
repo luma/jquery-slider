@@ -121,7 +121,7 @@
             if (!data) return;
 
             if (data.step > 1) {
-                steppedValue = steppedValue + (steppedValue % data.step);
+                steppedValue = steppedValue - (steppedValue % data.step);
             }
 
             if (steppedValue > data.max) steppedValue = data.max;

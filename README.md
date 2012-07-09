@@ -82,7 +82,7 @@ The current value that the widget is displaying.
 
 Default: 1
 
-The value will be constrained to even multiples of step. So if step is 2, then value can be 50 or 52, but not 51. Inbetween values will be rounded up to the nearest event multiple.
+The value will be constrained to even multiples of step. So if step is 2, then value can be 50 or 52, but not 51. Inbetween values will be rounded down to the nearest event multiple.
 
 ## Changelog
 
