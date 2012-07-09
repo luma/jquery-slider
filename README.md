@@ -40,7 +40,7 @@ Create a Mic Level control, with specific min, max, step, and a starting value:
 
 		     $('.mic-volume').slider({
 		         value: 50,
-		     }, function(value) {
+		     }, function(event, value) {
 			   	console.info("Selected value is " + value);
 		     });
 

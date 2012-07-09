@@ -9,7 +9,7 @@
 //  $(...selector...).slider('setValue', 60);
 //  $(...selector...).slider('getValue');       // => 60
 //
-//  $(...selector...).on('changevalue.slider', function(value) {
+//  $(...selector...).on('changevalue.slider', function(event, value) {
 //      console.info("Selected Value is " + value);
 //  });
 //
