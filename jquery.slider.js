@@ -74,8 +74,8 @@
                 var values = [];
 
                 this.each(function() {
-                    var data = $this.data('slider');
-                    values.push(data.value);
+                    var data = $(this).data('slider');
+                    if (data) values.push(data.value);
                 });
 
                 switch(values.length) {
@@ -116,6 +116,8 @@
     var _setValue = function($this, value) {
             var data = $this.data('slider'),
                 steppedValue = value;
+
+            if (!data) return;
 
             if (data.step > 1) {
                 steppedValue = steppedValue + (steppedValue % data.step);
