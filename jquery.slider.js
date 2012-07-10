@@ -54,11 +54,10 @@
 
                     $this.data('slider', data);
 
-                    data.$handle.on('mousedown.slider', _onMouseDown);
-                    data.$indicator.on('mousedown.slider', cancelEvent);
-                    // $this.on('mousedown.slider', function(e) {
-                    //     return _onMouseDown.call(data.$handle, e, true);
-                    // });
+                    if (settings.disabled !== true) {
+                        data.$handle.on('mousedown.slider', _onMouseDown);
+                        data.$indicator.on('mousedown.slider', cancelEvent);
+                    }
 
                     // Set the current value
                     _setValue($(this), data, settings.value);
@@ -89,7 +88,25 @@
                 }
             },
 
-            destroy : function( ) {
+            enable: function() {
+                return this.each(function(){
+                    var $this = $(this),
+                         data = $this.data('slider');
+
+                     _enable($this, data);
+                });
+            },
+
+            disable: function() {
+                return this.each(function(){
+                    var $this = $(this),
+                         data = $this.data('slider');
+
+                     _disable($this, data);
+                });
+            },
+
+            destroy: function() {
                 return this.each(function(){
 
                     var $this = $(this),
@@ -114,7 +131,25 @@
         }
     };
 
-    var _setValue = function($this, data, value) {
+    var _enable = function($this, data) {
+            data.$handle.on('mousedown.slider', _onMouseDown);
+            data.$indicator.on('mousedown.slider', cancelEvent);
+        },
+
+        _disable = function($this, data) {
+            data.$handle.off('mousedown.slider', _onMouseDown);
+            data.$indicator.off('mousedown.slider', cancelEvent);
+
+            $(document.body).off({
+                'mousemove.slider': data._onMouseMove,
+                'mouseup.slider': data._onMouseUp
+            });
+
+            delete data.position;
+            $this.data('slider', data);
+        },
+
+        _setValue = function($this, data, value) {
             var steppedValue = value;
 
             if (!data) return;
